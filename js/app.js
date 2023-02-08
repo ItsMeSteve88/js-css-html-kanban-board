@@ -1,89 +1,161 @@
 const taskLists = document.querySelectorAll('.task-list')
 const backlogTasks = document.querySelector('#backlog .task-list')
+const titleInput = document.querySelector('#title')
+const descriptionInput = document.querySelector('#description')
+const submitButton = document.querySelector('#submit-button')
+const errorContainer = document.querySelector('.error-container')
 
 let tasks = [
   {
     id: 0,
-    title: "Fix submit button",
-    description: "Submit button has not been working since the latest release!",
+    title: 'Fix submit button',
+    description:
+      'The submit button has stopped working since the last release!',
   },
   {
     id: 1,
-    title: "Change the text on T and C's",
-    description: "As per the last business meeting, the terms and conditions have changed, and the text should be updated to suit.",
+    title: "Change text on T and C's",
+    description:
+      'As per the last business meeting, the terms and conditions have changed, and the text should be updated to suit.',
   },
   {
     id: 2,
-    title: "Change the banner picture",
-    description: "Marketing has requested a new banner to be added to the website",
+    title: 'Change banner picture',
+    description:
+      'Marketing has requested a new banner to be added to the website.',
   },
-];
+]
 
-tasks.forEach(taskList =>
-    {
-    taskList.addEventListener('dragover', dragOver)
-    taskList.addEventListener('drop', dragDrop)
-    })
+taskLists.forEach((taskList) => {
+  taskList.addEventListener('dragover', dragOver)
+  taskList.addEventListener('drop', dragDrop)
+})
 
 // create tasks
 
 function createTask(taskId, title, description)
 {
-    //building the task card
-    const taskCard = document.createElement('div')
-    const taskHeader = document.createElement('div')
-    const taskTitle = document.createElement('p')
-    const taskDescriptionContainer = document.createElement('div')
-    const taskDescription = document.createElement('p')
-    const deleteIcon = document.createElement('p')
-    
-    //adding the task card classes
-    taskCard.classList.add('task-container')
-    taskHeader.classList.add('task-header')
-    taskDescriptionContainer.classList.add('task-description-container')
+  
+  // building the task card
+  const taskCard = document.createElement('div')
+  const taskHeader = document.createElement('div')
+  const taskTitle = document.createElement('p')
+  const taskDescriptionContainer = document.createElement('div')
+  const taskDescription = document.createElement('p')
+  const deleteIcon = document.createElement('p')
 
-    //adding the task card text
-    taskTitle.textContent = title
-    taskDescription.textContent = description
-    deleteIcon.textContent = '❌'
+  //adding the task card classes
+  taskCard.classList.add('task-container')
+  taskHeader.classList.add('task-header')
+  taskDescriptionContainer.classList.add('task-description-container')
 
-    //adding the task card attributes
-    taskCard.setAttribute('draggable', true)
-    taskCard.setAttribute('task-id', taskId)
+  //adding the task card content
+  taskTitle.textContent = title
+  taskDescription.textContent = description
+  deleteIcon.textContent = '❌'
 
-    taskCard.addEventListener('dragstart', dragStart)
+  //adding the task card attributes
+  taskCard.setAttribute('draggable', true)
+  taskCard.setAttribute('task-id', taskId)
 
-    //appending the task card to the DOM
-    taskHeader.append(taskTitle, deleteIcon)
-    taskDescriptionContainer.append(taskDescription)
-    taskCard.append(taskHeader, taskDescriptionContainer)
-    backlogTasks.append(taskCard)
+  taskCard.addEventListener('dragstart', dragStart)
+  deleteIcon.addEventListener('click', deleteTask)
+
+  //appending the task card to the DOM
+  taskHeader.append(taskTitle, deleteIcon)
+  taskDescriptionContainer.append(taskDescription)
+  taskCard.append(taskHeader, taskDescriptionContainer)
+  backlogTasks.append(taskCard)
 }
 
-// adding tasks using the createTask function
+//add color to task card based on column
+function addColor(column) {
+  let color
+  switch (column) {
+    case 'backlog':
+      color = 'rgb(255, 119, 51)'
+      break
+    case 'doing':
+      color = 'rgb(255, 221, 51)'
+      break
+    case 'done':
+      color = 'rgb(85, 255, 51)'
+      break
+    case 'discard':
+      color = 'rgb(255, 51, 85)'
+      break
+    default:
+      color = 'rgb(232, 232, 232)'
+  }
+  return color
+}
 
-function addTasks()
-{
-    tasks.forEach(task => createTask(task.id, task.title, task.description))
+function addTasks() {
+  tasks.forEach((task) => createTask(task.id, task.title, task.description))
 }
 
 addTasks()
 
-// drag and drop
-
+//drag and drop
 let elementBeingDragged
 
-function dragStart()
-{
-    elementBeingDragged = this
+function dragStart() {
+  elementBeingDragged = this
 }
 
-function dragOver(e)
-{
-    e.preventDefault()
+function dragOver(e) {
+  e.preventDefault()
 }
 
-function dragDrop()
-{
-    this.append(elementBeingDragged)
+function dragDrop() {
+  const columnId = this.parentNode.id
+  elementBeingDragged.firstChild.style.backgroundColor = addColor(columnId)
+  this.append(elementBeingDragged)
+}
+
+function showError(message) {
+  const errorMessage = document.createElement('p')
+  errorMessage.textContent = message
+  errorMessage.classList.add('error-message')
+  errorContainer.append(errorMessage)
+
+  setTimeout(() => {
+    errorContainer.textContent = ''
+  }, 2000)
+}
+
+function addTask(e) {
+  e.preventDefault()
+  const filteredTitles = tasks.filter((task) => {
+    return task.title === titleInput.value
+  })
+
+  if (!filteredTitles.length) {
+    const newId = tasks.length
+    tasks.push({
+      id: newId,
+      title: titleInput.value,
+      description: descriptionInput.value,
+    })
+    createTask(newId, titleInput.value, descriptionInput.value)
+    titleInput.value = ''
+    descriptionInput.value = ''
+  } else {
+    showError('Title must be unique!')
+  }
+}
+submitButton.addEventListener('click', addTask)
+
+function deleteTask() {
+  const headerTitle = this.parentNode.firstChild.textContent
+
+  const filteredTasks = tasks.filter((task) => {
+    return task.title === headerTitle
+  })
+
+  tasks = tasks.filter((task) => {
+    return task !== filteredTasks[0]
+  })
+  
+  this.parentNode.parentNode.remove()
 }

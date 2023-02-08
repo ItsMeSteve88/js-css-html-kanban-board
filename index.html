@@ -1,55 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS CSS HTML Kanban Board</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="info-container">
-            <h1>かんばん Kanban Board</h1>
-            <p>A place to organise your tasks as you complete them, as well as adding new ones and deleting old ones</p>
+      <div class="info-container">
+        <h1>かんばん Kanban Board</h1>
+        <p>
+          A place to organise tasks to completion as well as add new ones and
+          delete old ones.
+        </p>
+      </div>
+      <form class="input-container">
+        <div class="fields">
+          <input id="title" placeholder="title..." />
+          <input id="description" placeholder="description..." />
         </div>
-
-        <form class="input-container">
-            <div class="fields">
-                <input id="title" placeholder="Title..."/>
-                <input id="description" placeholder="Description..."/>
-            </div>
-            <input type="submit" id="submit-button"/>
-        </form>
+        <input type="submit" id="submit-button" />
+      </form>
     </header>
 
     <section class="column-container">
-        <div class="task-column" id="backlog">
-            <h3>⚡ Backlog</h3>
-            <hr class="custom-hr"/>
-            <div class="task-list"></div>
-        </div>
+      <div class="task-column" id="backlog">
+        <h3>⚡ Backlog</h3>
+        <hr class="custom-hr" />
+        <div class="task-list"></div>
+      </div>
 
-        <div class="task-column" id="doing">
-            <h3>➡️ In Progress</h3>
-            <hr class="custom-hr"/>
-            <div class="task-list"></div>
-        </div>
+      <div class="task-column" id="doing">
+        <h3>➡️ In Progress</h3>
+        <hr class="custom-hr" />
+        <div class="task-list"></div>
+      </div>
 
-        <div class="task-column" id="done">
-            <h3>✔️ Done</h3>
-            <hr class="custom-hr"/>
-            <div class="task-list"></div>
-        </div>
-        <div class="task-column" id="discard">
-            <h3>🗑️ Won't do</h3>
-            <hr class="custom-hr"/>
-            <div class="task-list"></div>
-        </div>
+      <div class="task-column" id="done">
+        <h3>✔️ Done</h3>
+        <hr class="custom-hr" />
+        <div class="task-list"></div>
+      </div>
 
+      <div class="task-column" id="discard">
+        <h3>🗑️ Won't Do</h3>
+        <hr class="custom-hr" />
+        <div class="task-list"></div>
+      </div>
     </section>
 
-    <script src="/js/app.js"></script>
-</body>
+    <div class="error-container"></div>
+
+    <script src="js/app.js"></script>
+  </body>
 </html>
