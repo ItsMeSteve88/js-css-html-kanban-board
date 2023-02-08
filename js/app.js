@@ -113,6 +113,7 @@ function dragDrop() {
   this.append(elementBeingDragged)
 }
 
+// error handling
 function showError(message) {
   const errorMessage = document.createElement('p')
   errorMessage.textContent = message
@@ -125,7 +126,6 @@ function showError(message) {
 }
 
 // add task
-
 function addTask(e) {
   e.preventDefault()
   const filteredTitles = tasks.filter((task) => {
