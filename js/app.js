@@ -8,21 +8,21 @@ const errorContainer = document.querySelector('.error-container')
 let tasks = [
   {
     id: 0,
-    title: 'Fix submit button',
+    title: 'Find and contact caterers',
     description:
-      'The submit button has stopped working since the last release!',
+      'The list of caterers need to be looked at and need to decide on 3.',
   },
   {
     id: 1,
-    title: "Change text on T and C's",
+    title: "Call Ruth and arrange a meeting ",
     description:
-      'As per the last business meeting, the terms and conditions have changed, and the text should be updated to suit.',
+      'Rach needs to call Ruth and decide when to visit the castle.',
   },
   {
     id: 2,
-    title: 'Change banner picture',
+    title: 'Photographer/Videographer',
     description:
-      'Marketing has requested a new banner to be added to the website.',
+      'Need to find a photographer and videographer for the wedding.',
   },
 ]
 
@@ -79,7 +79,7 @@ function addColor(column) {
       color = 'rgb(255, 221, 51)'
       break
     case 'done':
-      color = 'rgb(85, 255, 51)'
+      color = 'rgb(44, 103, 5)'
       break
     case 'discard':
       color = 'rgb(255, 51, 85)'
@@ -123,6 +123,8 @@ function showError(message) {
     errorContainer.textContent = ''
   }, 2000)
 }
+
+// add task
 
 function addTask(e) {
   e.preventDefault()
