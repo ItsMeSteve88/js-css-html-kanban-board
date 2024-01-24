@@ -10,13 +10,13 @@ let tasks = [
     id: 0,
     title: 'Find and contact caterers',
     description:
-      'The list of caterers need to be looked at and need to decide on 3.',
+      'The list of caterers has to be looked at, need to decide on 3 to choose from.',
   },
   {
     id: 1,
-    title: "Call Ruth and arrange a meeting ",
+    title: "Call Marge and arrange a meeting ",
     description:
-      'Rach needs to call Ruth and decide when to visit the castle.',
+      'Call Marge and decide when to visit the castle.',
   },
   {
     id: 2,
